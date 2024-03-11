@@ -38,3 +38,12 @@ class InvoiceProduct(models.Model):
 
     def __str__(self) -> str:
         return f'{self.invoice_product}'
+
+class Transaction(models.Model):
+    transaction_id = models.BigAutoField(primary_key=True)
+    transaction_number = models.IntegerField()
+    transaction_mode = models.CharField(max_length=30)
+    transaction_amount = models.FloatField(default=0.0)
+    transaction_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='transaction_by')
+    invoice = models.ForeignKey(Invoice, on_delete=models.DO_NOTHING, related_name='invoice_number')
+    is_successful = models.BooleanField(blank=True)
